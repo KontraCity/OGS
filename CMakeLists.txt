@@ -11,7 +11,12 @@ find_package(fmt CONFIG REQUIRED)
 find_package(Boost REQUIRED)
 
 ### --- Executable configuration --- ###
-add_executable(ogs "source/main.cpp" "source/server.cpp")
+add_executable(ogs
+    "source/sinks/evms.cpp"
+    "source/server.cpp"
+    "source/main.cpp"
+    "source/utility.cpp"
+)
 target_include_directories(ogs PRIVATE "include/")
 target_link_libraries(ogs PRIVATE
     fmt::fmt
