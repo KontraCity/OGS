@@ -28,7 +28,7 @@ void Sinks::EVMS(const Server::Packet& packet)
     }
 
     static float previousValue = -1;
-    float currentValue = static_cast<float>(Utility::Round(packet.oilTemp, 1));
+    float currentValue = static_cast<float>(Utility::Round(packet.oilTemp, 2));
     if (previousValue == -1)
         Utility::Sleep(0.5);  // Let ESP initialize
     else if (previousValue == currentValue)
