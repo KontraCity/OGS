@@ -37,9 +37,11 @@ void Sinks::EVMS(const Server::Packet& packet)
 
     try
     {
-        std::stringstream buffer;
-        buffer << currentValue << '\n';
-        asio::write(serial, asio::buffer(buffer.str()));
+        int32_t value = *reinterpret_cast<int32_t*>(&currentValue);
+        std::array<uint8_t, sizeof(value)> buffer = {};
+        for (int index = 0, offset = 8 * (sizeof(value) - 1); index < buffer.size() && offset >= 0; ++index, offset -= 8)
+            buffer[index] = value >> offset;
+        asio::write(serial, asio::buffer(buffer));
     }
     catch (const boost::system::system_error&)
     {
